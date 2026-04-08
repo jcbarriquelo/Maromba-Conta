@@ -19,10 +19,12 @@ O app foi pensado pra ser usado em modo **paisagem**, com o celular apoiado na a
 
 ---
 
-## 📲 Instalar no Android (PWA)
+## Instalação
+
+Acesse:
 
 ```
-https://seu-usuario.github.io/maromba-count
+https://seu-usuario.github.io/Maromba-Conta
 ```
 
 No Chrome → menu **⋮** → **Adicionar à tela inicial** → vira ícone nativo, sem Play Store.
