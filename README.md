@@ -17,6 +17,8 @@ A tela é dividida em dois painéis:
 | Direito | Segurar | Reseta o timer de descanso |
 | Direito | ⚙ | Configura o tempo de descanso |
 
+🔒 -> indica que a tela não vai apagar
+
 ---
 
 ## Instalação
