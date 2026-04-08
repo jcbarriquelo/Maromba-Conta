@@ -39,7 +39,6 @@
       font-family: 'Barlow Condensed', sans-serif;
     }
 
-    /* Wake Lock overlay hint */
     #wake-hint {
       position: fixed;
       top: 12px;
@@ -57,11 +56,16 @@
       transition: opacity 1s;
     }
 
+    /* ── APP: row in landscape, column in portrait ── */
     #app {
       display: flex;
+      flex-direction: row;
       width: 100vw;
       height: 100vh;
       position: relative;
+    }
+    @media (orientation: portrait) {
+      #app { flex-direction: column; }
     }
 
     /* ── SETTINGS MODAL ── */
@@ -94,176 +98,132 @@
       color: var(--text);
       text-align: center;
     }
-    .setting-row {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .setting-label {
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--dim);
-    }
-    .setting-value {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 42px;
-      color: var(--text);
-      text-align: center;
-      line-height: 1;
-    }
-    .setting-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-    }
+    .setting-row { display: flex; flex-direction: column; gap: 8px; }
+    .setting-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); }
+    .setting-value { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--text); text-align: center; line-height: 1; }
+    .setting-controls { display: flex; align-items: center; justify-content: center; gap: 16px; }
     .ctrl-btn {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 2px solid #2a2a2a;
-      background: #1a1a1a;
-      color: var(--text);
-      font-size: 26px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      line-height: 1;
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 2px solid #2a2a2a; background: #1a1a1a;
+      color: var(--text); font-size: 26px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600; line-height: 1;
     }
     .ctrl-btn:active { transform: scale(0.92); background: #252525; }
-
-    .presets {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    .presets { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
     .preset-btn {
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid #2a2a2a;
-      background: transparent;
-      color: #888;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 6px 14px; border-radius: 20px;
+      border: 1px solid #2a2a2a; background: transparent;
+      color: #888; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; letter-spacing: 1px; cursor: pointer; transition: all 0.15s;
     }
     .preset-btn:active, .preset-btn.active {
       border-color: var(--accent-right);
       color: var(--accent-right);
       background: rgba(255,107,0,0.08);
     }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-    }
+    .modal-actions { display: flex; gap: 10px; }
     .btn-save, .btn-cancel {
-      flex: 1;
-      padding: 14px;
-      border-radius: 10px;
-      border: none;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.15s;
+      flex: 1; padding: 14px; border-radius: 10px; border: none;
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+      letter-spacing: 2px; cursor: pointer; transition: all 0.15s;
     }
-    .btn-save {
-      background: var(--accent-right);
-      color: #000;
-    }
+    .btn-save { background: var(--accent-right); color: #000; }
     .btn-save:active { transform: scale(0.97); }
-    .btn-cancel {
-      background: #1e1e1e;
-      color: #666;
-      border: 1px solid #2a2a2a;
-    }
+    .btn-cancel { background: #1e1e1e; color: #666; border: 1px solid #2a2a2a; }
     .btn-cancel:active { background: #252525; }
 
-    /* ── LEFT PANEL (séries) ── */
-    #panel-left {
+    /* ── PANELS ── */
+    #panel-left, #panel-right {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: var(--left-bg);
       position: relative;
       cursor: pointer;
-      border-right: 1px solid var(--divider);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      padding-left: env(safe-area-inset-left, 0px);
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
     }
+    #panel-left {
+      background: var(--left-bg);
+      border-right: 1px solid var(--divider);
+    }
+    @media (orientation: portrait) {
+      #panel-left {
+        border-right: none;
+        border-bottom: 1px solid var(--divider);
+      }
+    }
+    #panel-right { background: var(--right-bg); }
 
+    /* glow blobs */
     #panel-left::before {
       content: '';
       position: absolute;
-      bottom: -80px;
-      left: -80px;
-      width: 280px;
-      height: 280px;
+      bottom: -80px; left: -80px;
+      width: 280px; height: 280px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(232,255,0,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #panel-right::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,0,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .panel-label {
       position: absolute;
-      top: 20px;
+      top: 14px;
       font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--dim);
     }
 
+    /* ── SERIES ── */
     .series-display {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0;
       pointer-events: none;
     }
-
     .series-number {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(80px, 18vw, 160px);
+      font-size: clamp(56px, 20vmin, 160px);
       line-height: 0.9;
       color: var(--accent-left);
-      transition: transform 0.08s ease;
       text-shadow: 0 0 40px rgba(232,255,0,0.2);
     }
-
     .series-word {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(14px, 3vw, 22px);
+      font-size: clamp(11px, 2.5vmin, 22px);
       letter-spacing: 5px;
       color: rgba(232,255,0,0.4);
       text-transform: uppercase;
     }
-
     .series-goal {
-      margin-top: 12px;
-      font-size: 13px;
+      margin-top: 8px;
+      font-size: clamp(10px, 1.6vmin, 13px);
       letter-spacing: 2px;
       color: var(--dim);
       font-weight: 300;
     }
 
+    /* ── RIPPLE ── */
     .ripple-container {
       position: absolute;
       inset: 0;
       pointer-events: none;
       overflow: hidden;
     }
-
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -271,23 +231,14 @@
       animation: ripple-anim 0.5s ease-out forwards;
       pointer-events: none;
     }
+    .ripple-left  { background: rgba(232,255,0,0.08); }
+    .ripple-right { background: rgba(255,107,0,0.08); }
+    @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
 
-    .ripple-left {
-      background: rgba(232,255,0,0.08);
-    }
-    .ripple-right {
-      background: rgba(255,107,0,0.08);
-    }
-
-    @keyframes ripple-anim {
-      to { transform: scale(4); opacity: 0; }
-    }
-
-    /* top-right: reset btn */
+    /* ── RESET BTN ── */
     #btn-reset-series {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 10px; right: 10px;
       background: transparent;
       border: 1px solid #2a2a2a;
       color: #444;
@@ -295,7 +246,7 @@
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 20px;
       cursor: pointer;
       transition: all 0.2s;
@@ -303,81 +254,49 @@
     }
     #btn-reset-series:active { border-color: var(--accent-left); color: var(--accent-left); }
 
-    /* ── RIGHT PANEL (descanso) ── */
-    #panel-right {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: var(--right-bg);
-      position: relative;
-      cursor: pointer;
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      padding-right: env(safe-area-inset-right, 0px);
-      padding-top: env(safe-area-inset-top, 0px);
-    }
-
-    #panel-right::before {
-      content: '';
-      position: absolute;
-      top: -80px;
-      right: -80px;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,107,0,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
+    /* ── REST TIMER ── */
     .rest-display {
       display: flex;
       flex-direction: column;
       align-items: center;
       pointer-events: none;
+      position: relative;
+      z-index: 2;
     }
-
     .rest-timer {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(80px, 18vw, 160px);
+      font-size: clamp(44px, 14vmin, 140px);
       line-height: 0.9;
       color: var(--accent-right);
       transition: color 0.3s;
       text-shadow: 0 0 40px rgba(255,107,0,0.2);
     }
-
     .rest-timer.running { color: var(--accent-right); }
-    .rest-timer.paused { color: #888; animation: blink-pause 1s step-end infinite; }
-    .rest-timer.done { color: #e8ff00; animation: pulse-done 0.6s ease infinite alternate; }
+    .rest-timer.paused  { color: #888; animation: blink-pause 1s step-end infinite; }
+    .rest-timer.done    { color: #e8ff00; animation: pulse-done 0.6s ease infinite alternate; }
 
-    @keyframes blink-pause {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
-    }
-
-    @keyframes pulse-done {
-      from { opacity: 1; }
-      to { opacity: 0.5; }
-    }
+    @keyframes blink-pause { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    @keyframes pulse-done  { from { opacity: 1; } to { opacity: 0.5; } }
 
     .rest-word {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(14px, 3vw, 22px);
+      font-size: clamp(11px, 2.5vmin, 22px);
       letter-spacing: 5px;
       color: rgba(255,107,0,0.4);
       text-transform: uppercase;
     }
-
     .rest-status {
-      margin-top: 12px;
-      font-size: 13px;
+      margin-top: 8px;
+      font-size: clamp(9px, 1.6vmin, 13px);
       letter-spacing: 2px;
       color: var(--dim);
       font-weight: 300;
       text-transform: uppercase;
+      text-align: center;
+      padding: 0 8px;
     }
 
-    /* circular progress */
+    /* ── RING ── */
     .rest-ring {
       position: absolute;
       top: 50%;
@@ -385,36 +304,29 @@
       transform: translate(-50%, -50%);
       pointer-events: none;
     }
+    .rest-ring circle { transition: stroke-dashoffset 1s linear; }
 
-    .rest-ring circle {
-      transition: stroke-dashoffset 1s linear;
-    }
-
-    /* settings btn */
+    /* ── SETTINGS BTN ── */
     #btn-settings {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 36px;
-      height: 36px;
+      top: 10px; right: 10px;
+      width: 34px; height: 34px;
       background: transparent;
       border: 1px solid #2a2a2a;
       border-radius: 50%;
       color: #444;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       z-index: 10;
       transition: all 0.2s;
     }
     #btn-settings:active { border-color: var(--accent-right); color: var(--accent-right); }
 
-    /* configured time badge */
+    /* ── BADGE ── */
     #rest-config-badge {
       position: absolute;
-      bottom: 16px;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 11px;
@@ -423,46 +335,22 @@
       text-transform: uppercase;
       font-weight: 400;
       pointer-events: none;
+      white-space: nowrap;
     }
 
-    /* tap hint animation */
-    .tap-hint {
-      position: absolute;
-      bottom: 48px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: #2a2a2a;
-      text-transform: uppercase;
-      animation: hint-pulse 2s ease infinite;
-      pointer-events: none;
-    }
-    @keyframes hint-pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-
-    /* ── FLASH overlay on panel tap ── */
+    /* ── FLASH ── */
     .flash {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
+      position: absolute; inset: 0;
+      pointer-events: none; opacity: 0;
       animation: flash-anim 0.25s ease-out forwards;
     }
-    .flash-left { background: rgba(232,255,0,0.06); }
+    .flash-left  { background: rgba(232,255,0,0.06); }
     .flash-right { background: rgba(255,107,0,0.08); }
+    @keyframes flash-anim { 0% { opacity: 1; } 100% { opacity: 0; } }
 
-    @keyframes flash-anim {
-      0% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-
-    /* number bump animation */
     @keyframes bump {
-      0% { transform: scale(1); }
-      30% { transform: scale(1.18); }
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.18); }
       100% { transform: scale(1); }
     }
     .bump { animation: bump 0.2s ease-out; }
@@ -475,7 +363,7 @@
 
 <div id="app">
 
-  <!-- LEFT: Série counter -->
+  <!-- LEFT: Séries -->
   <div id="panel-left">
     <div class="panel-label">SÉRIES</div>
     <div class="ripple-container" id="ripple-left"></div>
@@ -484,21 +372,21 @@
       <div class="series-word">SÉRIES</div>
       <div class="series-goal" id="series-goal">TOQUE PARA CONTAR</div>
     </div>
-    <button id="btn-reset-series">↺ </button>
+    <button id="btn-reset-series">↺ RESETAR</button>
   </div>
 
-  <!-- RIGHT: Rest timer -->
+  <!-- RIGHT: Descanso -->
   <div id="panel-right">
     <div class="panel-label">DESCANSO</div>
     <div class="ripple-container" id="ripple-right"></div>
 
-    <svg class="rest-ring" id="rest-ring-svg" width="260" height="260" viewBox="0 0 260 260">
+    <svg class="rest-ring" id="rest-ring-svg" viewBox="0 0 260 260" width="260" height="260">
       <circle cx="130" cy="130" r="118" fill="none" stroke="#1a1a1a" stroke-width="3"/>
       <circle id="ring-progress" cx="130" cy="130" r="118"
         fill="none" stroke="#ff6b00" stroke-width="3"
         stroke-linecap="round"
-        stroke-dasharray="741.4"
-        stroke-dashoffset="741.4"
+        stroke-dasharray="741.42"
+        stroke-dashoffset="741.42"
         transform="rotate(-90 130 130)"
         opacity="0.5"/>
     </svg>
@@ -510,7 +398,7 @@
     </div>
 
     <button id="btn-settings">⚙</button>
-    <div id="rest-config-badge" id="rest-badge">60s CONFIGURADO</div>
+    <div id="rest-config-badge">60s CONFIGURADO</div>
   </div>
 
 </div>
@@ -519,7 +407,6 @@
 <div id="settings-modal">
   <div class="modal-box">
     <div class="modal-title">CONFIGURAR</div>
-
     <div class="setting-row">
       <div class="setting-label">Tempo de Descanso</div>
       <div class="setting-controls">
@@ -527,7 +414,7 @@
         <div class="setting-value" id="modal-rest-val">60s</div>
         <button class="ctrl-btn" id="btn-inc-rest">+</button>
       </div>
-      <div class="presets" id="rest-presets">
+      <div class="presets">
         <button class="preset-btn" data-val="30">30s</button>
         <button class="preset-btn" data-val="45">45s</button>
         <button class="preset-btn" data-val="60">1min</button>
@@ -536,7 +423,6 @@
         <button class="preset-btn" data-val="180">3min</button>
       </div>
     </div>
-
     <div class="modal-actions">
       <button class="btn-cancel" id="btn-modal-cancel">CANCELAR</button>
       <button class="btn-save" id="btn-modal-save">SALVAR</button>
@@ -547,43 +433,58 @@
 <script>
   // ── STATE ──
   let seriesCount = 0;
-  let restDuration = 60; // seconds
+  let restDuration = 60;
   let modalRestDuration = 60;
   let restRemaining = 0;
   let restInterval = null;
   let wakeLock = null;
+  let restState = 'idle';
+  let longPressTimer = null;
+  let longPressTriggered = false;
 
-  const RING_CIRCUMFERENCE = 741.4;
+  const RING_R = 118;
+  const RING_C = +(2 * Math.PI * RING_R).toFixed(2); // 741.42
 
   // ── ELEMENTS ──
-  const seriesNum = document.getElementById('series-num');
-  const seriesGoal = document.getElementById('series-goal');
-  const restTimer = document.getElementById('rest-timer');
-  const restStatus = document.getElementById('rest-status');
-  const panelLeft = document.getElementById('panel-left');
-  const panelRight = document.getElementById('panel-right');
+  const seriesNum      = document.getElementById('series-num');
+  const seriesGoal     = document.getElementById('series-goal');
+  const restTimer      = document.getElementById('rest-timer');
+  const restStatus     = document.getElementById('rest-status');
+  const panelLeft      = document.getElementById('panel-left');
+  const panelRight     = document.getElementById('panel-right');
   const btnResetSeries = document.getElementById('btn-reset-series');
-  const btnSettings = document.getElementById('btn-settings');
-  const settingsModal = document.getElementById('settings-modal');
+  const btnSettings    = document.getElementById('btn-settings');
+  const settingsModal  = document.getElementById('settings-modal');
   const btnModalCancel = document.getElementById('btn-modal-cancel');
-  const btnModalSave = document.getElementById('btn-modal-save');
-  const modalRestVal = document.getElementById('modal-rest-val');
-  const btnDecRest = document.getElementById('btn-dec-rest');
-  const btnIncRest = document.getElementById('btn-inc-rest');
-  const ringProgress = document.getElementById('ring-progress');
-  const restBadge = document.getElementById('rest-config-badge');
-  const wakeHint = document.getElementById('wake-hint');
+  const btnModalSave   = document.getElementById('btn-modal-save');
+  const modalRestVal   = document.getElementById('modal-rest-val');
+  const btnDecRest     = document.getElementById('btn-dec-rest');
+  const btnIncRest     = document.getElementById('btn-inc-rest');
+  const ringProgress   = document.getElementById('ring-progress');
+  const restBadge      = document.getElementById('rest-config-badge');
+  const wakeHint       = document.getElementById('wake-hint');
+  const ringSvg        = document.getElementById('rest-ring-svg');
+
+  // ── RING RESIZE: fits 72% of the smaller panel dimension ──
+  function resizeRing() {
+    const pw = panelRight.offsetWidth;
+    const ph = panelRight.offsetHeight;
+    const size = Math.round(Math.min(pw, ph) * 0.72);
+    ringSvg.setAttribute('width',  size);
+    ringSvg.setAttribute('height', size);
+  }
+  resizeRing();
+  window.addEventListener('resize', resizeRing);
 
   // ── WAKE LOCK ──
   async function requestWakeLock() {
     try {
       if ('wakeLock' in navigator) {
         wakeLock = await navigator.wakeLock.request('screen');
-        wakeHint.textContent = '';
+        wakeHint.textContent = '🔒 TELA ATIVA';
         document.addEventListener('visibilitychange', async () => {
-          if (document.visibilityState === 'visible') {
+          if (document.visibilityState === 'visible')
             wakeLock = await navigator.wakeLock.request('screen');
-          }
         });
       }
     } catch(e) {
@@ -595,15 +496,13 @@
 
   // ── HELPERS ──
   function formatTime(s) {
-    const m = Math.floor(s / 60);
-    const sec = s % 60;
+    const m = Math.floor(s / 60), sec = s % 60;
     return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
   }
 
   function updateRing(remaining, total) {
     const pct = total > 0 ? remaining / total : 0;
-    const offset = RING_CIRCUMFERENCE * (1 - pct);
-    ringProgress.style.strokeDashoffset = offset;
+    ringProgress.style.strokeDashoffset = RING_C * (1 - pct);
   }
 
   function updateRestBadge() {
@@ -612,28 +511,31 @@
 
   function formatModalVal(s) {
     if (s < 60) return s + 's';
-    const m = Math.floor(s/60);
-    const sec = s % 60;
+    const m = Math.floor(s/60), sec = s % 60;
     return sec === 0 ? m + 'min' : m + ':' + String(sec).padStart(2,'0');
   }
 
   function addRipple(container, x, y, cls) {
-    const ripple = document.createElement('div');
-    ripple.className = `ripple ${cls}`;
+    const el = document.createElement('div');
+    el.className = `ripple ${cls}`;
     const size = Math.max(container.offsetWidth, container.offsetHeight) * 1.5;
-    ripple.style.cssText = `
-      width: ${size}px; height: ${size}px;
-      left: ${x - size/2}px; top: ${y - size/2}px;
-    `;
-    container.appendChild(ripple);
-    ripple.addEventListener('animationend', () => ripple.remove());
+    el.style.cssText = `width:${size}px;height:${size}px;left:${x-size/2}px;top:${y-size/2}px;`;
+    container.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
   }
 
   function bumpElement(el) {
     el.classList.remove('bump');
     void el.offsetWidth;
     el.classList.add('bump');
-    el.addEventListener('animationend', () => el.classList.remove('bump'), {once:true});
+    el.addEventListener('animationend', () => el.classList.remove('bump'), { once: true });
+  }
+
+  function flashPanel(panel, cls) {
+    const f = document.createElement('div');
+    f.className = `flash ${cls}`;
+    panel.appendChild(f);
+    f.addEventListener('animationend', () => f.remove());
   }
 
   // ── SERIES ──
@@ -641,19 +543,11 @@
     if (e.target === btnResetSeries) return;
     seriesCount++;
     seriesNum.textContent = seriesCount;
-    seriesGoal.textContent = seriesCount === 1 ? '1ª SÉRIE' : `${seriesCount}ª SÉRIE`;
+    seriesGoal.textContent = `${seriesCount}ª SÉRIE`;
     bumpElement(seriesNum);
-
     const rect = panelLeft.getBoundingClientRect();
     addRipple(document.getElementById('ripple-left'), e.clientX - rect.left, e.clientY - rect.top, 'ripple-left');
-
-    // flash
-    const flash = document.createElement('div');
-    flash.className = 'flash flash-left';
-    panelLeft.appendChild(flash);
-    flash.addEventListener('animationend', () => flash.remove());
-
-    // haptic
+    flashPanel(panelLeft, 'flash-left');
     if (navigator.vibrate) navigator.vibrate(30);
   });
 
@@ -666,11 +560,6 @@
   });
 
   // ── REST TIMER ──
-  // States: 'idle' | 'running' | 'paused' | 'done'
-  let restState = 'idle';
-  let longPressTimer = null;
-  let longPressTriggered = false;
-
   function runRestInterval() {
     restInterval = setInterval(() => {
       restRemaining--;
@@ -724,24 +613,16 @@
     restTimer.className = 'rest-timer';
     restStatus.textContent = 'TOQUE PARA INICIAR';
     updateRing(0, restDuration);
-    if (navigator.vibrate) navigator.vibrate([30, 40, 60]);
+    if (navigator.vibrate) navigator.vibrate([30,40,60]);
   }
 
   function handleRightTap(x, y) {
     const rect = panelRight.getBoundingClientRect();
     addRipple(document.getElementById('ripple-right'), x - rect.left, y - rect.top, 'ripple-right');
-    const flash = document.createElement('div');
-    flash.className = 'flash flash-right';
-    panelRight.appendChild(flash);
-    flash.addEventListener('animationend', () => flash.remove());
-
-    if (restState === 'idle' || restState === 'done') {
-      startRest();
-    } else if (restState === 'running') {
-      pauseRest();
-    } else if (restState === 'paused') {
-      resumeRest();
-    }
+    flashPanel(panelRight, 'flash-right');
+    if (restState === 'idle' || restState === 'done') startRest();
+    else if (restState === 'running') pauseRest();
+    else if (restState === 'paused') resumeRest();
     bumpElement(restTimer);
   }
 
@@ -751,17 +632,11 @@
     longPressTimer = setTimeout(() => {
       longPressTriggered = true;
       resetRest();
-      const flash = document.createElement('div');
-      flash.className = 'flash flash-right';
-      flash.style.background = 'rgba(255,255,255,0.07)';
-      panelRight.appendChild(flash);
-      flash.addEventListener('animationend', () => flash.remove());
+      flashPanel(panelRight, 'flash-right');
     }, 600);
   }, { passive: true });
 
-  panelRight.addEventListener('touchmove', () => {
-    clearTimeout(longPressTimer);
-  }, { passive: true });
+  panelRight.addEventListener('touchmove', () => clearTimeout(longPressTimer), { passive: true });
 
   panelRight.addEventListener('touchend', (e) => {
     clearTimeout(longPressTimer);
@@ -784,22 +659,17 @@
 
   function updateModalDisplay() {
     modalRestVal.textContent = formatModalVal(modalRestDuration);
-    document.querySelectorAll('.preset-btn').forEach(btn => {
-      btn.classList.toggle('active', parseInt(btn.dataset.val) === modalRestDuration);
-    });
+    document.querySelectorAll('.preset-btn').forEach(btn =>
+      btn.classList.toggle('active', parseInt(btn.dataset.val) === modalRestDuration)
+    );
   }
 
-  btnSettings.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openModal();
-  });
-
+  btnSettings.addEventListener('click', (e) => { e.stopPropagation(); openModal(); });
   btnModalCancel.addEventListener('click', () => settingsModal.classList.remove('open'));
 
   btnModalSave.addEventListener('click', () => {
     restDuration = modalRestDuration;
     settingsModal.classList.remove('open');
-    // reset timer display
     clearInterval(restInterval);
     restState = 'idle';
     restTimer.textContent = formatTime(restDuration);
@@ -824,28 +694,28 @@
     updateModalDisplay();
   });
 
-  document.querySelectorAll('.preset-btn').forEach(btn => {
+  document.querySelectorAll('.preset-btn').forEach(btn =>
     btn.addEventListener('click', () => {
       modalRestDuration = parseInt(btn.dataset.val);
       updateModalDisplay();
-    });
-  });
+    })
+  );
 
-  // Close modal on backdrop click
   settingsModal.addEventListener('click', (e) => {
     if (e.target === settingsModal) settingsModal.classList.remove('open');
   });
 
   // ── SERVICE WORKER ──
-  if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator)
     navigator.serviceWorker.register('./sw.js').catch(() => {});
-  }
 
   // ── INIT ──
+  ringProgress.setAttribute('stroke-dasharray',  RING_C);
+  ringProgress.setAttribute('stroke-dashoffset', RING_C);
   restTimer.textContent = formatTime(restDuration);
   updateRestBadge();
 
-  // Prevent double-tap zoom
+  // Prevent double-tap zoom & multi-touch
   document.addEventListener('touchstart', (e) => {
     if (e.touches.length > 1) e.preventDefault();
   }, { passive: false });
@@ -857,10 +727,6 @@
     lastTap = now;
   }, { passive: false });
 
-  // Force landscape hint on portrait
-  window.addEventListener('orientationchange', () => {
-    // just let it flow, layout adapts
-  });
 </script>
 </body>
 </html>
