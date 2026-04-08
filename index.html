@@ -198,8 +198,9 @@
       background: var(--left-bg);
       position: relative;
       cursor: pointer;
-      overflow: clip;
       border-right: 1px solid var(--divider);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
     }
 
     #panel-left::before {
@@ -282,11 +283,11 @@
       to { transform: scale(4); opacity: 0; }
     }
 
-    /* bottom-left: reset btn */
+    /* bottom-right: reset btn */
     #btn-reset-series {
       position: absolute;
-      bottom: max(20px, env(safe-area-inset-bottom, 20px));
-      right: max(20px, env(safe-area-inset-right, 20px));
+      bottom: 16px;
+      right: 16px;
       background: transparent;
       border: 1px solid #2a2a2a;
       color: #444;
@@ -298,6 +299,7 @@
       border-radius: 20px;
       cursor: pointer;
       transition: all 0.2s;
+      z-index: 5;
     }
     #btn-reset-series:active { border-color: var(--accent-left); color: var(--accent-left); }
 
@@ -311,7 +313,9 @@
       background: var(--right-bg);
       position: relative;
       cursor: pointer;
-      overflow: clip;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+      padding-top: env(safe-area-inset-top, 0px);
     }
 
     #panel-right::before {
@@ -389,8 +393,8 @@
     /* settings btn */
     #btn-settings {
       position: absolute;
-      top: max(20px, env(safe-area-inset-top, 20px));
-      right: max(20px, env(safe-area-inset-right, 20px));
+      top: 16px;
+      right: 16px;
       width: 36px;
       height: 36px;
       background: transparent;
@@ -410,7 +414,7 @@
     /* configured time badge */
     #rest-config-badge {
       position: absolute;
-      bottom: max(20px, env(safe-area-inset-bottom, 20px));
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 11px;
