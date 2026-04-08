@@ -1,4 +1,4 @@
-# 🏋️ MarombaCount 🏋️
+# 🏋️ MarombaConta 🏋️
 
 > **Contador de séries e descanso.**  
 > Sem frescura. Sem distração.
@@ -11,11 +11,11 @@ O app foi pensado pra ser usado em modo **paisagem**, com o celular apoiado na a
 
 | Lado | Gesto | Ação |
 |------|-------|------|
-| ◀ **Esquerdo** | Toque | +1 série concluída |
-| ◀ Esquerdo | Botão ↺ | Reseta o contador de séries |
-| ▶ **Direito** | Toque | Inicia / pausa / retoma o descanso |
-| ▶ Direito | Segurar | Reseta o timer de descanso |
-| ▶ Direito | ⚙ | Configura o tempo de descanso |
+| Esquerdo | Toque | +1 série concluída |
+| Esquerdo | Botão ↺ | Reseta o contador de séries |
+| Direito | Toque | Inicia / pausa / retoma o descanso |
+| Direito | Segurar | Reseta o timer de descanso |
+| Direito | ⚙ | Configura o tempo de descanso |
 
 ---
 
