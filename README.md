@@ -7,7 +7,7 @@
 
 ## Como funciona
 
-O app foi pensado pra ser usado em modo **paisagem**, com o celular apoiado na academia. A tela é dividida em dois painéis:
+A tela é dividida em dois painéis:
 
 | Lado | Gesto | Ação |
 |------|-------|------|
